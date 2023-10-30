@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  postgredb:
+    container_name: database
+    image: postgres:16-alpine3.18
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: prog_comp
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  adminer:
+    container_name: db_adminer
+    image: adminer
+    restart: always
+    depends_on:
+      - postgredb
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
